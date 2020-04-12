@@ -1,0 +1,10 @@
+{
+  "tables": [
+    "tables/vehicle.sql",
+    "tables/signal.sql",
+    "tables/move.sql"
+  ],
+  "indexes": [
+    "indexes/idx_signal_vehicle_day_ts.sql"
+  ]
+}
