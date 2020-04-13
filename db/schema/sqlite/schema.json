@@ -5,6 +5,7 @@
     "tables/move.sql"
   ],
   "indexes": [
-    "indexes/idx_signal_vehicle_day_ts.sql"
+    "indexes/idx_signal_vehicle_day_ts.sql",
+    "indexes/idx_move_vehicle_day.sql"
   ]
 }
