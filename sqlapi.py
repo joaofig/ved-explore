@@ -1,7 +1,25 @@
 import sqlite3
 import os
 import json
+import numpy as np
+import pandas as pd
 import pandas.io.sql as sqlio
+
+
+class SqlCache(object):
+
+    def __init__(self, sql_dir='./db/sql'):
+        self.sql_dir = sql_dir
+        self.cache = dict()
+
+    def get(self, key: str) -> str:
+        if key not in self.cache:
+            file_name = os.path.join(self.sql_dir, key + ".sql")
+            if os.path.exists(file_name):
+                with open(file_name) as sql_file:
+                    sql = sql_file.read()
+                    self.cache[key] = sql
+        return self.cache[key]
 
 
 class VedDb(object):
@@ -9,6 +27,7 @@ class VedDb(object):
     def __init__(self, folder='./db'):
         self.db_folder = folder
         self.db_file_name = os.path.join(folder, 'ved.db')
+        self.sql_cache = SqlCache()
 
         if not os.path.exists(self.db_file_name):
             self.create_schema()
@@ -19,19 +38,9 @@ class VedDb(object):
     def insert_vehicles(self, vehicles):
         conn = self.connect()
         cur = conn.cursor()
+        sql = self.sql_cache.get("vehicle/insert")
 
-        cur.executemany('''
-        INSERT INTO vehicle (
-            vehicle_id,
-            vehicle_type,
-            vehicle_class,
-            engine,
-            transmission,
-            drive_wheels,
-            weight
-            )
-        VALUES (?, ?, ?, ?, ?, ?, ?);
-        ''', vehicles)
+        cur.executemany(sql, vehicles)
 
         conn.commit()
         cur.close()
@@ -40,38 +49,9 @@ class VedDb(object):
     def insert_signals(self, signals):
         conn = self.connect()
         cur = conn.cursor()
+        sql = self.sql_cache.get("signal/insert")
 
-        cur.executemany('''
-        INSERT INTO signal (
-            day_num,
-            vehicle_id,
-            trip_id,
-            time_stamp,
-            latitude,
-            longitude,
-            speed,
-            maf,
-            rpm,
-            abs_load,
-            oat,
-            fuel_rate,
-            ac_power_kw,
-            ac_power_w,
-            heater_power_w,
-            hv_bat_current,
-            hv_bat_soc,
-            hv_bat_volt,
-            st_ftb_1,
-            st_ftb_2,
-            lt_ftb_1,
-            lt_ftb_2
-            )
-        VALUES (
-            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-            ?, ?
-        );
-        ''', signals)
+        cur.executemany(sql, signals)
 
         conn.commit()
         cur.close()
@@ -85,23 +65,23 @@ class VedDb(object):
         cur.close()
         conn.close()
 
+    def query(self, sql: str,
+              convert_none: bool = True) -> pd.DataFrame:
+        conn = self.connect()
+        df = sqlio.read_sql_query(sql, conn)
+        if convert_none:
+            df.fillna(value=np.nan, inplace=True)
+        conn.close()
+        return df
+
+    def head(self, sql: str, rows: int = 5) -> pd.DataFrame:
+        return self.query(sql).head(rows)
+
+    def tail(self, sql: str, rows: int = 5) -> pd.DataFrame:
+        return self.query(sql).tail(rows)
+
     def generate_moves(self):
-        sql = '''
-insert into move (day_num, vehicle_id, ts_ini, ts_end)
-select    tt.day_num
-,         tt.vehicle_id
-,         ( select min(s1.time_stamp) 
-            from signal s1 
-            where s1.day_num = tt.day_num and 
-                  s1.vehicle_id = tt.vehicle_id
-            ) as ts_ini
-,         ( select max(s2.time_stamp) 
-            from signal s2 
-            where s2.day_num = tt.day_num and 
-                  s2.vehicle_id = tt.vehicle_id
-            ) as ts_end
-from (select distinct day_num, vehicle_id from signal) tt;
-        '''
+        sql = self.sql_cache.get("move/generate")
         self.execute_sql(sql)
 
     def create_schema(self, schema_dir='schema/sqlite'):
