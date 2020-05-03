@@ -1,4 +1,5 @@
 {
+  "sequence": ["tables", "indexes"],
   "tables": [
     "tables/vehicle.sql",
     "tables/signal.sql",

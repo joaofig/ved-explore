@@ -22,4 +22,4 @@ CREATE TABLE signal (
     st_ftb_2        FLOAT,
     lt_ftb_1        FLOAT,
     lt_ftb_2        FLOAT
-)
+);

@@ -65,8 +65,8 @@ class VedDb(object):
         cur.close()
         conn.close()
 
-    def query(self, sql: str,
-              convert_none: bool = True) -> pd.DataFrame:
+    def query_df(self, sql: str,
+                 convert_none: bool = True) -> pd.DataFrame:
         conn = self.connect()
         df = sqlio.read_sql_query(sql, conn)
         if convert_none:
@@ -74,11 +74,19 @@ class VedDb(object):
         conn.close()
         return df
 
+    def query(self, sql: str):
+        conn = self.connect()
+        cur = conn.cursor()
+        result = list(cur.execute(sql))
+        cur.close()
+        conn.close()
+        return result
+
     def head(self, sql: str, rows: int = 5) -> pd.DataFrame:
-        return self.query(sql).head(rows)
+        return self.query_df(sql).head(rows)
 
     def tail(self, sql: str, rows: int = 5) -> pd.DataFrame:
-        return self.query(sql).tail(rows)
+        return self.query_df(sql).tail(rows)
 
     def generate_moves(self):
         sql = self.sql_cache.get("move/generate")
@@ -93,9 +101,9 @@ class VedDb(object):
         decoder = json.JSONDecoder()
         items = decoder.decode(text)
 
-        item_names = ['tables', 'indexes']
+        item_sequence = items['sequence']
 
-        for item_name in item_names:
+        for item_name in item_sequence:
             for file in items[item_name]:
                 file_name = os.path.join(schema_path, file)
                 with open(file_name) as sql_file:
