@@ -12,7 +12,7 @@ entrypoints==0.3
 folium==0.10.1
 idna==2.9
 ipykernel==5.2.1
-ipython==7.13.0
+ipython==7.14.0
 ipython-genutils==0.2.0
 ipywidgets==7.5.1
 jedi==0.17.0
@@ -30,7 +30,7 @@ mistune==0.8.4
 nbconvert==5.6.1
 nbformat==5.0.6
 notebook==6.0.3
-numpy==1.18.3
+numpy==1.18.4
 packaging==20.3
 pandas==1.0.3
 pandocfilters==1.4.2
@@ -52,7 +52,7 @@ six==1.14.0
 terminado==0.8.3
 testpath==0.4.4
 tornado==6.0.4
-tqdm==4.45.0
+tqdm==4.46.0
 traitlets==4.3.3
 urllib3==1.25.9
 wcwidth==0.1.9
