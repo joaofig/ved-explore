@@ -82,6 +82,10 @@ class VedDb(object):
         conn.close()
         return result
 
+    def query_scalar(self, sql: str):
+        res = self.query(sql)
+        return res[0][0]
+
     def head(self, sql: str, rows: int = 5) -> pd.DataFrame:
         return self.query_df(sql).head(rows)
 
