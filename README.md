@@ -1,8 +1,8 @@
 # ved-explore
 Exploration of the Vehicle Energy Dataset
 
-This code repository uses a SQLite database to explore the [Vehicle
-Energy Dataset (VED)](https://arxiv.org/abs/1905.02081).
+This code repository uses a SQLite database to explore the
+[Vehicle Energy Dataset (VED)](https://arxiv.org/abs/1905.02081).
 
 Small datasets are cool. You can load them into memory and 
 manipulate them at will, no sweat. Massive datasets are also 
@@ -29,3 +29,5 @@ intuitive API.
 In this repository, I illustrate such use with a dataset of 
 vehicle fuel and electric energy consumption, which is 
 medium-size, as described above.
+
+[Medium Article](https://towardsdatascience.com/the-medium-sized-dataset-632cf0f15bb6)
