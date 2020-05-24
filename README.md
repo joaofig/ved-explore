@@ -30,4 +30,5 @@ In this repository, I illustrate such use with a dataset of
 vehicle fuel and electric energy consumption, which is 
 medium-size, as described above.
 
-[Medium Article](https://towardsdatascience.com/the-medium-sized-dataset-632cf0f15bb6)
+## Medium Articles
+[The Medium-Sized Dataset](https://towardsdatascience.com/the-medium-sized-dataset-632cf0f15bb6)
