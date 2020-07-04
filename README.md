@@ -32,3 +32,5 @@ medium-size, as described above.
 
 ## Medium Articles
 [The Medium-Sized Dataset](https://towardsdatascience.com/the-medium-sized-dataset-632cf0f15bb6)
+
+[Geographic Clustering with HDBSCAN](https://towardsdatascience.com/geographic-clustering-with-hdbscan-ef8cb0ed6051)
