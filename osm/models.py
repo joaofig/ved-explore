@@ -5,8 +5,17 @@ from collections import Counter
 
 
 class OSMNode(object):
+    """
+    Models an OSM node object
+    """
 
     def __init__(self, nid, lat, lon):
+        """
+        Constructs a node
+        :param nid: Node identifier
+        :param lat: Latitude
+        :param lon: Longitude
+        """
         self.nid = nid
         self.lat = lat
         self.lon = lon
@@ -21,8 +30,17 @@ class OSMNode(object):
 
 
 class OSMWay(object):
+    """
+    Models an OSM way object
+    """
 
     def __init__(self, wid, nodes, tags):
+        """
+        Constructs a way
+        :param wid: Way identifier
+        :param nodes: List of nodes
+        :param tags: List of tags
+        """
         self.wid = wid
         self.nodes = set(nodes)
         self.tags = tags
@@ -45,8 +63,17 @@ class OSMWay(object):
 
 
 class OSMNet(object):
+    """
+    A network of OSM nodes and ways
+    """
 
     def __init__(self, nodes: List[OSMNode], ways: List[OSMWay]):
+        """
+        Constructs an OSMNet object from aa list of nodes and
+        a list of ways
+        :param nodes: List of OSMNode
+        :param ways: List of OSMWay
+        """
         self.ref_nodes = []
         self.nodes = nodes
         self.ways = ways
@@ -61,22 +88,27 @@ class OSMNet(object):
                 self.ref_nodes.append(node)
 
     def get_knn(self, lat: float, lon: float, k: int = 5) -> List[OSMNode]:
+        """
+        Calculates the k-nearest neighbors of the given point.
+        Note that this function uses a brute-force approach not recommended
+        for large datasets
+        :param lat: Query point latitude
+        :param lon: Query point longitude
+        :param k: Number of nearest neighbors
+        :return: List of the (up to) k nearest neighbors
+        """
         lats = np.array([n.lat for n in self.ref_nodes])
         lons = np.array([n.lon for n in self.ref_nodes])
         dist = vec_haversine(lats, lons, lat, lon)
         return np.argsort(dist)[:k]
 
-    def get_way_name(self, lat: float, lon: float, k: int = 7) -> str:
-        lats = np.array([n.lat for n in self.ref_nodes])
-        lons = np.array([n.lon for n in self.ref_nodes])
-        dist = vec_haversine(lats, lons, lat, lon)
-        idx = np.argsort(dist)[:k]
-        names = [self.ref_nodes[i].name for i in idx]
-        cnt = Counter(names)
-        cmn = cnt.most_common(2)
-        return " / ".join([n[0] for n in cmn])
-
     def get_name(self, points: np.ndarray, k: int = 5) -> str:
+        """
+        Calculates the name for a set of points (cluster)
+        :param points: Point array encoded as latitude, longitude
+        :param k: Number of neighboring points to query
+        :return: Cluster name
+        """
         knn = []
         for pt in points:
             knn.extend(self.get_knn(pt[0], pt[1], k).tolist())
@@ -89,6 +121,12 @@ class OSMNet(object):
 
     @classmethod
     def from_overpass(cls, data):
+        """
+        Create an OSMNet object from JSON-encoded data sourced from the
+        Overpass API
+        :param data: JSON-encoded string
+        :return: OSMNet object
+        """
         nodes = [OSMNode(n['id'], n['lat'], n['lon']) for n in data['elements']
                  if n['type'] == 'node']
         ways = [OSMWay(w['id'], w['nodes'], w['tags']) for w in data['elements']

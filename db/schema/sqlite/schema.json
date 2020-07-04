@@ -4,6 +4,7 @@
     "tables/vehicle.sql",
     "tables/signal.sql",
     "tables/move.sql",
+    "tables/cluster.sql",
     "tables/cluster_point.sql"
   ],
   "indexes": [
