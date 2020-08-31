@@ -40,10 +40,10 @@ class BaseDb(object):
         cur.close()
         conn.close()
 
-    def query_df(self, sql: str,
+    def query_df(self, sql: str, parameters=None,
                  convert_none: bool = True) -> pd.DataFrame:
         conn = self.connect()
-        df = sqlio.read_sql_query(sql, conn)
+        df = sqlio.read_sql_query(sql, conn, params=parameters)
         if convert_none:
             df.fillna(value=np.nan, inplace=True)
         conn.close()
