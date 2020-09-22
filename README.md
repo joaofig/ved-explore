@@ -34,3 +34,5 @@ medium-size, as described above.
 [The Medium-Sized Dataset](https://towardsdatascience.com/the-medium-sized-dataset-632cf0f15bb6)
 
 [Geographic Clustering with HDBSCAN](https://towardsdatascience.com/geographic-clustering-with-hdbscan-ef8cb0ed6051)
+
+[Clustering Moving Object Trajectories](https://towardsdatascience.com/clustering-moving-object-trajectories-216c372d37e2?source=friends_link&sk=4a7688795231f03f901c33cae2d2ce2d)
