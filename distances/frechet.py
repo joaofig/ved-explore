@@ -482,9 +482,6 @@ class FastDiscreteFrechetMatrix(object):
         dist_func:
         """
         self.dist_func = dist_func
-        # JIT the numba code
-        # self.distance(np.array([[0.0, 0.0], [1.0, 1.0]]),
-        #               np.array([[0.0, 0.0], [1.0, 1.0]]))
 
     def distance(self, p: np.ndarray, q: np.ndarray) -> float:
         n_p = p.shape[0]

@@ -8,12 +8,12 @@ backcall==0.2.0
 base58==2.0.1
 bleach==3.2.1
 blinker==1.4
-boto3==1.15.1
-botocore==1.18.1
+boto3==1.15.2
+botocore==1.18.2
 branca==0.4.1
 cachetools==4.1.1
 certifi==2020.6.20
-cffi==1.14.2
+cffi==1.14.3
 chardet==3.0.4
 click==7.1.2
 colour==0.1.5
@@ -52,7 +52,7 @@ MarkupSafe==1.1.1
 matplotlib==3.3.2
 mistune==0.8.4
 nbclient==0.5.0
-nbconvert==6.0.4
+nbconvert==6.0.5
 nbformat==5.0.7
 nest-asyncio==1.4.0
 networkx==2.5
@@ -62,7 +62,7 @@ numpy==1.19.2
 packaging==20.4
 pandas==1.1.2
 pandocfilters==1.4.2
-parso==0.7.1
+parso==0.8.0
 pathtools==0.1.2
 pexpect==4.8.0
 pickleshare==0.7.5
@@ -87,7 +87,7 @@ Send2Trash==1.5.0
 Shapely==1.7.1
 six==1.15.0
 sklearn==0.0
-terminado==0.9.0
+terminado==0.9.1
 testpath==0.4.4
 threadpoolctl==2.1.0
 toml==0.10.1
