@@ -39,14 +39,8 @@ Run all the notebooks in sequence, starting from one.
 All the links provided below should be freely accessible.
 If not, please open an issue.
 
-[The Medium-Sized Dataset](https://towardsdatascience.com/the-medium-sized-dataset-632cf0f15bb6)
+[The Medium-Sized Dataset](https://towardsdatascience.com/the-medium-sized-dataset-632cf0f15bb6) - Covers notebooks from 1 to 4.
 
-Covers notebooks from 1 to 4.
+[Geographic Clustering with HDBSCAN](https://towardsdatascience.com/geographic-clustering-with-hdbscan-ef8cb0ed6051) - Covers notebooks 5 to 7.
 
-[Geographic Clustering with HDBSCAN](https://towardsdatascience.com/geographic-clustering-with-hdbscan-ef8cb0ed6051)
-
-Covers notebooks 5 to 7.
-
-[Clustering Moving Object Trajectories](https://towardsdatascience.com/clustering-moving-object-trajectories-216c372d37e2?source=friends_link&sk=4a7688795231f03f901c33cae2d2ce2d)
-
-Covers notebook 9.
+[Clustering Moving Object Trajectories](https://towardsdatascience.com/clustering-moving-object-trajectories-216c372d37e2?source=friends_link&sk=4a7688795231f03f901c33cae2d2ce2d) - Covers notebook 9.
