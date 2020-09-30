@@ -44,3 +44,6 @@ If not, please open an issue.
 [Geographic Clustering with HDBSCAN](https://towardsdatascience.com/geographic-clustering-with-hdbscan-ef8cb0ed6051) - Covers notebooks 5 to 7.
 
 [Clustering Moving Object Trajectories](https://towardsdatascience.com/clustering-moving-object-trajectories-216c372d37e2?source=friends_link&sk=4a7688795231f03f901c33cae2d2ce2d) - Covers notebook 9.
+
+[Geospatial Indexing with Quadkeys](https://towardsdatascience.com/geospatial-indexing-with-quadkeys-d933dff01496?source=email-64bc009cedeb-1601470855647-layerCake.autoLayerCakeWriterNotification-------------------------e7509b67_3f86_4235_a64a_9eeeb9f544a9&sk=0de1a65d95817fd8abc841fa60f7a279) - 
+Covers the alternative version of notebook 7.
