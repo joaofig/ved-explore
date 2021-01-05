@@ -1,0 +1,8 @@
+{
+  "sequence": ["tables", "indexes"],
+  "tables": [
+    "tables/level_range.sql"
+  ],
+  "indexes": [
+  ]
+}

@@ -34,6 +34,22 @@ medium-size, as described above.
 
 Run all the notebooks in sequence, starting from one.
 
+Before running notebook number 10, you must first build the 
+tile database using the following command, issued from the 
+project's root:
+
+`python generate_densities.py`
+
+Please note that this may take a long time to run, most likely
+more than on hour.
+To explore the custom tiles, start the tile-serving
+API with the following command, also issued from the project's 
+root:
+
+`python tileapi.py`
+
+Now you can run notebook number 10.
+
 ## Medium Articles
 
 All the links provided below should be freely accessible.

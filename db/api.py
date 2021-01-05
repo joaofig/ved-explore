@@ -4,6 +4,7 @@ import json
 import numpy as np
 import pandas as pd
 import pandas.io.sql as sqlio
+import contextlib
 
 
 class SqlCache(object):
@@ -32,10 +33,13 @@ class BaseDb(object):
     def connect(self):
         return sqlite3.connect(self.db_file_name, check_same_thread=False)
 
-    def execute_sql(self, sql):
+    def execute_sql(self, sql, parameters=[], many=False):
         conn = self.connect()
         cur = conn.cursor()
-        cur.execute(sql)
+        if not many:
+            cur.execute(sql, parameters)
+        else:
+            cur.executemany(sql, parameters)
         conn.commit()
         cur.close()
         conn.close()
@@ -57,6 +61,14 @@ class BaseDb(object):
         conn.close()
         return result
 
+    @contextlib.contextmanager
+    def query_iterator(self, sql, parameters=[]):
+        conn = self.connect()
+        cur = conn.cursor()
+        yield cur.execute(sql, parameters)
+        cur.close()
+        conn.close()
+
     def query_scalar(self, sql, parameters=[]):
         res = self.query(sql, parameters)
         return res[0][0]
@@ -67,7 +79,7 @@ class BaseDb(object):
     def tail(self, sql: str, rows: int = 5) -> pd.DataFrame:
         return self.query_df(sql).tail(rows)
 
-    def create_schema(self, schema_dir='schema/sqlite'):
+    def create_schema(self, schema_dir):
         schema_path = os.path.join(self.db_folder, schema_dir)
         schema_file_name = os.path.join(schema_path, "schema.json")
 
@@ -116,7 +128,7 @@ class VedDb(BaseDb):
         super().__init__(folder=folder, file_name='ved.db')
 
         if not os.path.exists(self.db_file_name):
-            self.create_schema()
+            self.create_schema(schema_dir='schema/ved')
 
     def insert_vehicles(self, vehicles):
         self.insert_list("vehicle/insert", vehicles)
@@ -130,7 +142,7 @@ class VedDb(BaseDb):
     def generate_moves(self):
         sql = self.sql_cache.get("move/generate")
         self.execute_sql(sql)
-        
+
     def update_move_clusters(self, clusters):
         conn = self.connect()
         cur = conn.cursor()
@@ -154,9 +166,76 @@ class VedDb(BaseDb):
         conn.close()
 
 
+class TileDb(BaseDb):
+
+    def __init__(self, folder='./db', file_name='tile.db'):
+        super().__init__(folder=folder, file_name=file_name)
+
+        if not os.path.exists(self.db_file_name):
+            self.create_schema(schema_dir='schema/tile')
+
+            for i in range(8, 27):
+                sql = """
+                CREATE TABLE l{0:02} (
+                    qk          INTEGER PRIMARY KEY,
+                    tile        INTEGER NOT NULL,
+                    intensity   FLOAT NOT NULL
+                );
+                """.format(i)
+                self.execute_sql(sql)
+
+                sql = """
+                CREATE INDEX idx_l{0:02}_tile ON l{0:02} (
+                    tile
+                );
+                """.format(i)
+                self.execute_sql(sql)
+
+    def insert_qk_intensities(self, level, pair_list):
+        sql = "insert into l{0:02} (qk, tile, intensity) values (?, ?, ?)".format(level)
+        conn = self.connect()
+        cur = conn.cursor()
+
+        cur.executemany(sql, pair_list)
+
+        conn.commit()
+        cur.close()
+        conn.close()
+
+    def insert_level_ranges(self, level_ranges):
+        sql = "insert into level_range (level_num, level_min, level_max) values (?, ?, ?)"
+        conn = self.connect()
+        cur = conn.cursor()
+
+        cur.executemany(sql, level_ranges)
+
+        conn.commit()
+        cur.close()
+        conn.close()
+
+    def get_level_range(self, lvl):
+        sql = "select level_min, level_max from level_range where level_num=?"
+        conn = self.connect()
+        cur = conn.cursor()
+
+        r = list(cur.execute(sql, [lvl]))[0]
+
+        conn.commit()
+        cur.close()
+        conn.close()
+        return r
+
+
+class TraceDb(TileDb):
+
+    def __init__(self, folder='./db', file_name='trace.db'):
+        super().__init__(folder=folder, file_name=file_name)
+
+
 # Test code
 def main():
-    db = VedDb()
+    vedDb = VedDb()
+    tileDb = TileDb()
 
 
 if __name__ == "__main__":
