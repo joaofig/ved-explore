@@ -63,3 +63,5 @@ If not, please open an issue.
 
 [Geospatial Indexing with Quadkeys](https://towardsdatascience.com/geospatial-indexing-with-quadkeys-d933dff01496?source=email-64bc009cedeb-1601470855647-layerCake.autoLayerCakeWriterNotification-------------------------e7509b67_3f86_4235_a64a_9eeeb9f544a9&sk=0de1a65d95817fd8abc841fa60f7a279) - 
 Covers the alternative version of notebook 7.
+
+[Displaying Geographic Information Using Custom Map Tiles](https://towardsdatascience.com/displaying-geographic-information-using-custom-map-tiles-c0e3344909a4?source=friends_link&sk=df31039fbdfeafad2554e8c99673135f) - Covers notebook 10, `generate_densities.py`, and `tileapi.py`.
