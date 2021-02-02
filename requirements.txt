@@ -8,7 +8,7 @@ attrs==20.3.0
 Babel==2.9.0
 backcall==0.2.0
 base58==2.0.1
-bleach==3.2.1
+bleach==3.3.0
 blinker==1.4
 boto3==1.16.47
 botocore==1.19.47
