@@ -73,7 +73,7 @@ parso==0.8.1
 pathtools==0.1.2
 pexpect==4.8.0
 pickleshare==0.7.5
-Pillow==8.0.1
+Pillow==8.1.1
 prometheus-client==0.9.0
 prompt-toolkit==3.0.8
 protobuf==3.14.0
