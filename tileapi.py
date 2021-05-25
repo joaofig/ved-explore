@@ -170,7 +170,7 @@ def get_generic_tile(x, y, zoom, db_file_name, folder):
 
 
 @app.route("/density/<int:x>/<int:y>/<int:z>/", methods=["GET"])
-def get_density_tile(x, y, z):
+def get_density_tile(x: int, y: int, z: int):
     return get_generic_tile(x, y, z, "tile.db", "density")
 
 
