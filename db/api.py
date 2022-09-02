@@ -164,6 +164,11 @@ class VedDb(BaseDb):
         conn.commit()
         cur.close()
         conn.close()
+        
+    def get_cluster_locations(self, cluster_id):
+        sql = "select latitude, longitude from cluster_point where cluster_id = ?"
+        locations = list([h[0], h[1]] for h in self.query(sql, [cluster_id]))
+        return np.array(locations)
 
 
 class TileDb(BaseDb):

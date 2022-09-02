@@ -24,12 +24,34 @@ def vec_haversine(lat1: np.ndarray,
     d_lon = rad_lon2 - rad_lon1
     d_lat = rad_lat2 - rad_lat1
 
-    a = np.sin(d_lat/2.0)**2 + np.cos(rad_lat1) * np.cos(rad_lat2) \
-        * np.sin(d_lon/2.0)**2
+    a = np.sin(d_lat/2.0)**2 + \
+        np.multiply(np.multiply(np.cos(rad_lat1), np.cos(rad_lat2)), np.sin(d_lon/2.0)**2)
 
     c = 2 * np.arctan2(np.sqrt(a), np.sqrt(1.0 - a))
     meters = earth_radius * c
     return meters
+
+
+def square_haversine(lat: np.ndarray, lon: np.ndarray) -> np.ndarray:
+    """
+    Calculates a symmetrical square matrix of haversine distances between all the given locations.
+    :param lat: Array of latitudes
+    :param lon: Array of longitudes
+    :return: Square matrix of inter-point haversine distances
+    """
+    dim = lat.shape[0]
+    dist = np.zeros((dim, dim))
+    
+    for i in range(1, dim):
+        lat1 = lat[i-1]
+        lat2 = lat[i:]
+        lon1 = lon[i-1]
+        lon2 = lon[i:]
+        vec = vec_haversine(lat1, lon1, lat2, lon2)
+        
+        dist[i-1, i:] = vec
+        dist[i:, i-1] = vec
+    return dist
 
 
 def num_haversine(lat1: float,
@@ -58,7 +80,7 @@ def num_haversine(lat1: float,
         * math.sin(d_lon/2.0)**2
 
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1.0 - a))
-    meters = earth_radius * c
+    meters = c * earth_radius
     return meters
 
 

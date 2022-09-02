@@ -111,7 +111,7 @@ class OSMNet(object):
         """
         knn = []
         for pt in points:
-            knn.extend(self.get_knn(pt[0], pt[1], k).tolist())
+            knn.extend(self.get_knn(pt[0], pt[1], k))
 
         names = [self.ref_nodes[n].name for n in knn]
 

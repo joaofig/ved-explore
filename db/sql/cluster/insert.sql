@@ -1,0 +1,1 @@
+INSERT INTO cluster (cluster_id, cluster_name) VALUES (?, ?)

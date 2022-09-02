@@ -1,5 +1,5 @@
 {
-  "sequence": ["tables", "indexes"],
+  "sequence": ["tables", "indices"],
   "tables": [
     "tables/vehicle.sql",
     "tables/signal.sql",
@@ -7,7 +7,7 @@
     "tables/cluster.sql",
     "tables/cluster_point.sql"
   ],
-  "indexes": [
+  "indices": [
     "indexes/idx_signal_vehicle_day_ts.sql",
     "indexes/idx_move_vehicle_day.sql",
     "indexes/idx_move_clusters.sql",
