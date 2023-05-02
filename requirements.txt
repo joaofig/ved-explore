@@ -1,5 +1,5 @@
 colour==0.1.5
-Flask==2.2.2
+Flask==2.3.2
 numba==0.56.0
 numpy==1.23.2
 pandas==1.4.4
