@@ -6,6 +6,6 @@ pandas==1.4.4
 pypng==0.20220715.0
 pyproj==3.3.1
 pyquadkey2==0.2.2
-scipy==1.9.1
+scipy==1.10.0
 Shapely==1.8.4
 tqdm==4.64.0
